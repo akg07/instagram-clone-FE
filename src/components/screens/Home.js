@@ -12,7 +12,7 @@ const Home = () => {
         <div className="card-content">
           <h6>Title</h6>
           <p>body</p>
-          <i class="material-icons">favorite</i>
+          <i className="material-icons">favorite</i>
 
 
           <input type='text' placeholder='add comment' />

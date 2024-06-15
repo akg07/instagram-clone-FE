@@ -8,7 +8,7 @@ const Signin = () => {
       <input type="text" placeholder='email' />
       <input type="text" placeholder='password' />
 
-      <button className="btn waves-effect waves-light signin-button blue lighten-2">
+      <button className="btn waves-effect waves-light signin-button blue darken-2">
         Login
       </button>
 

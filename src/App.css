@@ -46,11 +46,18 @@ a{
 }
 
 
-.home {}
+/* .home {} */
 
 .home-card{
   margin: 26px auto;
   max-width: 600px;
   height: max-content;
 
+}
+
+.create-post {
+  margin: 30px auto;
+  max-width: 500px;
+  padding: 20px;
+  text-align: center;
 }
