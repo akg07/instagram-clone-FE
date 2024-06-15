@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import M from 'materialize-css';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +9,31 @@ const CreatePost =() => {
   const [body, setBody] = useState("");
   const [image, setImage] = useState("");
   const [url, setURL] = useState("");
+
+  useEffect(() => {
+    if(url) { // check is implemented cause useEffect works when componet mounts.
+      fetch('/create-post', {
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+        },
+        method: 'post',
+        body: JSON.stringify({
+          title, body, pic: url
+        })
+      }).then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if(data.error) {
+          M.toast({html: data.error, classes: '#c62828 red darken-3'});
+        }else {
+          M.toast({html: data.message, classes: '#43a047 green darken-1'});
+          navigate('/');
+        }
+      })
+      .catch(err => console.log(err));
+    }
+  }, [url]);
 
   const postDetails = () => {
     const data = new FormData();
@@ -23,26 +48,6 @@ const CreatePost =() => {
     .then(res => res.json()) 
     .then(data =>{
       if(data.url) setURL(data.url);
-    })
-    .catch(err => console.log(err));
-
-    fetch('/create-post', {
-      headers: {
-        'Content-type': 'application/json'
-      },
-      method: 'post',
-      body: JSON.stringify({
-        title, body, pic: url
-      })
-    }).then(res => res.json())
-    .then(data => {
-      console.log(data);
-      if(data.error) {
-        M.toast({html: data.error, classes: '#c62828 red darken-3'});
-      }else {
-        M.toast({html: data.message, classes: '#43a047 green darken-1'});
-        navigate('/');
-      }
     })
     .catch(err => console.log(err));
   }
