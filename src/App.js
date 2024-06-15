@@ -5,19 +5,22 @@ import Profile from './components/screens/Profile';
 import Signup from './components/screens/Signup';
 import Signin from './components/screens/Signin';
 import CreatePost from './components/screens/CreatePost';
-import {BrowserRouter, Route} from 'react-router-dom';
+
+import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Navbar />
-      <Route exact path="/" > <Home /> </Route>
-      <Route path="/signin"> <Signin /> </Route>
-      <Route path="/signup"> <Signup /> </Route>
-      <Route path="/profile"> <Profile /> </Route>
-      <Route path="/create"> <CreatePost /> </Route>
-    </BrowserRouter>
+      <Routes >
+        <Route exact path="/" element={<Home /> } />
+        <Route path="/signin" element={<Signin /> } />
+        <Route path="/signup" element={<Signup /> } />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/create" element={<CreatePost /> } /> 
+      </Routes >
+    </Router>
 
   );
 }

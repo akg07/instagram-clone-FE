@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import M from 'materialize-css';
-import {useHistory} from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 
 const Signup = () => {
 
-  const history = useHistory();
+  const navigate = useNavigate ();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,9 +26,10 @@ const Signup = () => {
         M.toast({html: data.error, classes: '#c62828 red darken-3'});
       }else {
         M.toast({html: data.message, classes: '#43a047 green darken-1'});
-        history.push('/signin');
+        navigate('/signin');
       }
     })
+    .catch(err => console.log(err));
   }
 
   return (
