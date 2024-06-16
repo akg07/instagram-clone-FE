@@ -11,6 +11,7 @@ import UserProfile from './components/screens/UserProfile';
 import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { reducer, initialState } from './reducers/userReducer';
+import SubscribedUserPost from './components/screens/SubscribedUserPost';
 
 
 export const UserContext = createContext();
@@ -35,6 +36,7 @@ const Routing = () => {
       <Route exact path="/profile" element={<Profile />} />
       <Route path="/create" element={<CreatePost /> } /> 
       <Route path="/profile/:userId" element={<UserProfile /> } /> 
+      <Route path="/my-followings-post" element={<SubscribedUserPost /> } /> 
     </Routes >
   );
 }

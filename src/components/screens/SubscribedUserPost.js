@@ -3,13 +3,13 @@ import { UserContext } from '../../App';
 import M from 'materialize-css';
 import { Link } from 'react-router-dom';
 
-const Home = () => {
+const SubscribedUserPost = () => {
 
   const { state, dispatch } = useContext(UserContext)
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('/all-post', {
+    fetch('/all-followings-post', {
       headers: {
         'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
         'Content-type': "application/json"
@@ -169,4 +169,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default SubscribedUserPost;

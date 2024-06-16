@@ -13,6 +13,7 @@ const Navbar = () => {
       return [
         <li key={'create'}><Link to="/create">Create Post</Link></li>,
         <li key={'profile'}><Link to="/profile">Profile</Link></li>,
+        <li key={'my-followings-post'}><Link to="/my-followings-post">MyFeed</Link></li>,
         <button className="btn #c62828 red darken-3" onClick={() => {
           localStorage.clear();
           dispatch({type: "CLEAR"});

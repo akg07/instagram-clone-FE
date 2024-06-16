@@ -76,3 +76,11 @@ a{
   padding: 20px;
   text-align: center;
 }
+
+.name{
+  padding: 5px;
+}
+
+.material-icons:hover{
+  cursor: pointer;
+}

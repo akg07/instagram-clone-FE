@@ -4,11 +4,11 @@ import { UserContext } from '../../App';
 
 
 const UserProfile = () => {
-
+  
+  const { userId } = useParams();
   const { state, dispatch} = useContext(UserContext);
   const [userProfile, setUserProfile] = useState([]);
-  const [showFollow, setShowFollow] = useState(true);
-  const { userId } = useParams();
+  const [showFollow, setShowFollow] = useState( state ? !state.followings.includes(userId) : true);
   
   useEffect(() => {
     fetch(`/user/${userId}`, {
@@ -21,11 +21,6 @@ const UserProfile = () => {
     .then((res) => res.json())
     .then(result => {
       setUserProfile(result);
-      state?.followings?.forEach(item => {
-        if(item === userId) {
-          setShowFollow(false);
-        }
-      })
     })
   }, []);
 
@@ -55,11 +50,7 @@ const UserProfile = () => {
         }
       });
       
-      userProfile.user.followers.filter(item => {
-        if(item === result.user._id) { // exists in followers list
-          setShowFollow(false);
-        }
-      });
+      setShowFollow(false);
     })
     .catch(err => {
       console.log(err);
@@ -93,11 +84,7 @@ const UserProfile = () => {
           }
         }
       });
-      userProfile.user.followers.filter(item => {
-        if(item !== result.user._id) { // doesn't exists in followers list
-          setShowFollow(true);
-        }
-      });
+      setShowFollow(true);
     })
     .catch(err => {
       console.log(err);
