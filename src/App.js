@@ -6,6 +6,7 @@ import Profile from './components/screens/Profile';
 import Signup from './components/screens/Signup';
 import Signin from './components/screens/Signin';
 import CreatePost from './components/screens/CreatePost';
+import UserProfile from './components/screens/UserProfile';
 
 import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 
@@ -31,8 +32,9 @@ const Routing = () => {
       <Route exact path="/" element={<Home /> } />
       <Route path="/signin" element={<Signin /> } />
       <Route path="/signup" element={<Signup /> } />
-      <Route path="/profile" element={<Profile />} />
+      <Route exact path="/profile" element={<Profile />} />
       <Route path="/create" element={<CreatePost /> } /> 
+      <Route path="/profile/:userId" element={<UserProfile /> } /> 
     </Routes >
   );
 }
