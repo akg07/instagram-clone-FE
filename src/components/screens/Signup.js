@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import M from 'materialize-css';
-import {useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
 
@@ -44,7 +44,7 @@ const Signup = () => {
           onClick={() => postData()}>
         Signup
       </button>
-      <h5> <a href="/signin"> Already have an account? Signin</a> </h5>
+      <h5> <Link to="/signin"> Already have an account? Signin</Link> </h5>
     </div>
     </div>
   );

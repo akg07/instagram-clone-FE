@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import M from 'materialize-css';
 import { UserContext } from '../../App';
 
@@ -46,7 +46,7 @@ const Signin = () => {
         Login
       </button>
 
-      <h5> <a href='/signup'> Don't have an account? signup</a></h5>
+      <h5> <Link to='/signup'> Don't have an account? signup</Link></h5>
     </div>
     </div>
   );
