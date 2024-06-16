@@ -7,14 +7,13 @@ const Home = () => {
   useEffect(() => {
     fetch('/all-post', {
       headers: {
-        'Authorization' : localStorage.getItem('jwt'),
+        'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
         'Content-type': "application/json"
       },
       method: 'get'
     })
     .then(res => res.json())
     .then(result => {
-      console.log(result);
       setData(result.posts);
     })
   }, []);

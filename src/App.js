@@ -19,9 +19,9 @@ const Routing = () => {
   const {state, dispatch} = useContext(UserContext);
   useEffect(()=> {
     const user = JSON.parse(localStorage.getItem('user'));
-    dispatch({type: 'USER', payload: user});
     if(user) {
-      navigate('/');
+      dispatch({type: 'USER', payload: user});
+      // navigate('/');
     }else{
       navigate('/signin');
     }
