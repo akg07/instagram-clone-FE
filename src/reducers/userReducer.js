@@ -8,6 +8,13 @@ export const reducer = (state, action) => {
   else if(action.type === 'CLEAR') {
     return null;
   }
+  else if(action.type === 'UPDATE') {
+    return {
+      ...state,
+      followers: action.payload.followers,
+      followings: action.payload.followings,
+    }
+  }
   else {
     return state;
   }
