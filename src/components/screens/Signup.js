@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import M from 'materialize-css';
 import {Link, useNavigate } from 'react-router-dom';
 
@@ -8,18 +8,50 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [image, setImage] = useState("");
+  const [url, setURL] = useState("");
 
-  const postData = () => {
+  useEffect(() => {
+    if(url) {
+      signUp();
+    }
+  }, [url])
+
+  const uploadImage = () => {
+    const data = new FormData();
+    data.append('file', image);
+    data.append('upload_preset', 'instagram-clone');
+    data.append('cloud_name', 'dfcstdai1');
+
+    fetch('https://api.cloudinary.com/v1_1/dfcstdai1/image/upload', {
+      method: 'post',
+      body: data
+    })
+    .then(res => res.json()) 
+    .then(data =>{
+      if(data.url) setURL(data.url);
+    })
+    .catch(err => console.log(err));
+  }
+
+  const signUp = () => {
+
+    const body = {
+      name,
+      email,
+      password
+    }
+
+    if(url) {
+      body['photo'] = url
+    }
+
     fetch('/signup', {
       method: 'post', 
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify({
-        name,
-        email,
-        password
-      })
+      body: JSON.stringify(body)
     }).then(res => res.json())
     .then(data => {
       if(data.error) {
@@ -32,6 +64,15 @@ const Signup = () => {
     .catch(err => console.log(err));
   }
 
+  const postData = () => {
+
+    if(image) {
+      uploadImage();
+    }else {
+      signUp();
+    }
+  }
+
   return (
     <div className="mycard">
       <div className="card auth-card input-field">
@@ -39,6 +80,16 @@ const Signup = () => {
       <input type="text" placeholder='name' value={name} onChange={(e) => setName(e.target.value)} />
       <input type="email" placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+
+      <div className="file-field input-field">
+        <div className="btn blue darken-2">
+          <span>Profile Image</span>
+          <input type="file" onChange={(e) => setImage(e.target.files[0]) } />
+        </div>
+        <div className="file-path-wrapper">
+          <input className="file-path validate" type="text" />
+        </div>
+      </div>
 
       <button className="btn waves-effect waves-light signin-button blue darken-2" 
           onClick={() => postData()}>
