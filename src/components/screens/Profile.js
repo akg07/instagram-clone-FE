@@ -5,7 +5,6 @@ const Profile = () => {
 
   const [myPics, setMyPics] = useState([]);
   const { state, dispatch} = useContext(UserContext);
-  console.log(state);
 
   useEffect(() => {
     fetch('/my-posts', {
@@ -17,7 +16,6 @@ const Profile = () => {
     })
     .then((res) => res.json())
     .then(result => {
-      console.log(result);
       setMyPics(result.posts);
     })
   }, []);

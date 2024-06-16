@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
+import M from 'materialize-css';
 
 const Home = () => {
 
@@ -91,13 +92,35 @@ const Home = () => {
     .catch(err => console.log(err));
   }
 
+  const deletePost = (postId) => {
+
+    fetch(`/delete-post/${postId}`, {
+      method: 'delete',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      }
+    })
+    .then(res => res.json())
+    .then(result => {
+      console.log(result);
+      const newData = data.filter(post => post._id != result.data._id);
+      setData(newData);
+      M.toast({html: 'Post delete successfully', classes: '#43a047 green darken-1'})
+    })
+  }
+
   return (
     <div className="home">
       {
         data.map(post => {
           return (
             <div className="card home-card" key={post._id}>
-              <h5>{post.postedBy.name}</h5>
+              <h5>
+                {post.postedBy.name}
+                {
+                  post.postedBy._id === state._id ? <i className="material-icons" onClick={ () => deletePost(post._id) } style={{float:'right'}}>delete</i> : ''
+                }
+              </h5>
               <div className="card-image">
                 <img src={post.photo} alt={post.title} />
               </div>
