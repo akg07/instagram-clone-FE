@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../App';
 
 const Home = () => {
 
+  const { state, dispatch } = useContext(UserContext)
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -18,6 +20,52 @@ const Home = () => {
     })
   }, []);
 
+  const likePost = (postId) => {
+    fetch('/like', {
+      method: 'put',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+      },
+      body: JSON.stringify({
+        postId
+      })
+    })
+    .then(res => res.json())
+    .then(result => {
+      const newData = data.map(item => {
+        if(item._id === result.data._id) {
+          return result.data;
+        }else return item;
+      });
+      setData(newData);
+    })
+    .catch(err => console.log(err));
+  }
+
+  const unlikePost = (postId) => {
+    fetch('/unlike', {
+      method: 'put',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+      },
+      body: JSON.stringify({
+        postId
+      })
+    })
+    .then(res => res.json())
+    .then(result => {
+      const newData = data.map(item => {
+        if(item._id === result.data._id) {
+          return result.data;
+        }else return item;
+      });
+      setData(newData);
+    })
+    .catch(err => console.log(err));
+  }
+
   return (
     <div className="home">
       {
@@ -26,12 +74,20 @@ const Home = () => {
             <div className="card home-card" key={post._id}>
               <h5>{post.postedBy.name}</h5>
               <div className="card-image">
-                <img src={post.photo} alt='image' />
+                <img src={post.photo} alt={post.title} />
               </div>
               <div className="card-content">
                 <h6>{post.title}</h6>
                 <p>{post.body}</p>
-                <i className="material-icons">favorite</i>
+                <h6>{post.likes.length} likes</h6>
+                {/* <i className="material-icons">favorite</i> */}
+
+                {
+                  post.likes.includes(state._id) ? 
+                  <i className="material-icons" onClick={ () => unlikePost(post._id) }>thumb_down</i> :
+                  <i className="material-icons" onClick={ () => likePost(post._id) }>thumb_up</i>
+                }
+
 
                 <input type='text' placeholder='add comment' />
               </div>
