@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import M from 'materialize-css';
 import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 const CreatePost =() => {
 
@@ -12,7 +13,7 @@ const CreatePost =() => {
 
   useEffect(() => {
     if(url) { // check is implemented cause useEffect works when componet mounts.
-      fetch('/create-post', {
+      fetch(`${config?.backendUrl}/create-post`, {
         headers: {
           'Content-type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('jwt')}`

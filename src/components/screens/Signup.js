@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import M from 'materialize-css';
 import {Link, useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 const Signup = () => {
 
@@ -46,7 +47,7 @@ const Signup = () => {
       body['photo'] = url
     }
 
-    fetch('/signup', {
+    fetch(`${config?.backendUrl}/signup`, {
       method: 'post', 
       headers: {
         'Content-type': 'application/json'

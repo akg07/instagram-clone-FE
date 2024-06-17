@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
+import config from '../../config';
 
 const Profile = () => {
 
+  console.log(config?.backendUrl);
   const [myPics, setMyPics] = useState([]);
   const [image, setImage] = useState("");
   const { state, dispatch} = useContext(UserContext);
 
   useEffect(() => {
-    fetch('/my-posts', {
+    fetch(`${config?.backendUrl}/my-posts`, {
       method: 'get',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -55,7 +57,7 @@ const Profile = () => {
       photo: photo
     }
 
-    fetch('/update-profile-pic', {
+    fetch(`${config?.backendUrl}/update-profile-pic`, {
       method: 'put',
       headers: {
         'Content-type': 'application/json',

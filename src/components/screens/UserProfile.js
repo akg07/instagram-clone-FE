@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { UserContext } from '../../App';
+import config from '../../config';
 
 
 const UserProfile = () => {
@@ -11,7 +12,7 @@ const UserProfile = () => {
   const [showFollow, setShowFollow] = useState( state ? !state.followings.includes(userId) : true);
   
   useEffect(() => {
-    fetch(`/user/${userId}`, {
+    fetch(`${config?.backendUrl}/user/${userId}`, {
       method: 'get',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -25,7 +26,7 @@ const UserProfile = () => {
   }, []);
 
   const followUser = () => {
-    fetch('/follow', {
+    fetch(`${config?.backendUrl}/follow`, {
       method: 'put',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -58,7 +59,7 @@ const UserProfile = () => {
   }
 
   const unfollowUser = () => {
-    fetch('/unfollow', {
+    fetch(`${config?.backendUrl}/unfollow`, {
       method: 'put',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,

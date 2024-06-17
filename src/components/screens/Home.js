@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
 import M from 'materialize-css';
 import { Link } from 'react-router-dom';
+import config from '../../config';
 
 const Home = () => {
 
@@ -9,7 +10,7 @@ const Home = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('/all-post', {
+    fetch(`${config?.backendUrl}/all-post`, {
       headers: {
         'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
         'Content-type': "application/json"
@@ -23,7 +24,7 @@ const Home = () => {
   }, []);
 
   const likePost = (postId) => {
-    fetch('/like', {
+    fetch(`${config?.backendUrl}/like`, {
       method: 'put',
       headers: {
         'Content-type': 'application/json',
@@ -46,7 +47,7 @@ const Home = () => {
   }
 
   const unlikePost = (postId) => {
-    fetch('/unlike', {
+    fetch(`${config?.backendUrl}/unlike`, {
       method: 'put',
       headers: {
         'Content-type': 'application/json',
@@ -69,7 +70,7 @@ const Home = () => {
   }
 
   const comment = (postId, text) => {
-    fetch('/comment', {
+    fetch(`${config?.backendUrl}/comment`, {
       method: 'put',
       headers: {
         'Content-type': 'application/json',
@@ -95,7 +96,7 @@ const Home = () => {
 
   const deletePost = (postId) => {
 
-    fetch(`/delete-post/${postId}`, {
+    fetch(`${config?.backendUrl}/delete-post/${postId}`, {
       method: 'delete',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('jwt')}`
