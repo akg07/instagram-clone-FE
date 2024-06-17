@@ -104,7 +104,7 @@ const SubscribedUserPost = () => {
     .then(res => res.json())
     .then(result => {
       console.log(result);
-      const newData = data.filter(post => post._id != result.data._id);
+      const newData = data.filter(post => post._id !== result.data._id);
       setData(newData);
       M.toast({html: 'Post delete successfully', classes: '#43a047 green darken-1'})
     })
