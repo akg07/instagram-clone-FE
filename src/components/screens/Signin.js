@@ -43,11 +43,10 @@ const Signin = () => {
       <input type="email" placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
 
-      <button className="btn waves-effect waves-light signin-button blue darken-2" onClick={() => login()}>
-        Login
-      </button>
+      <button className="btn waves-effect waves-light signin-button blue darken-2" onClick={() => login()}> Login </button>
 
-      <h5> <Link to='/signup'> Don't have an account? signup</Link></h5>
+      <h6> <Link to='/signup'> Don't have an account? signup</Link></h6>
+      <p> <Link to='/reset-password'> forgot password?</Link></p>
     </div>
     </div>
   );

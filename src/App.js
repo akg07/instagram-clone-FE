@@ -12,6 +12,8 @@ import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router
 
 import { reducer, initialState } from './reducers/userReducer';
 import SubscribedUserPost from './components/screens/SubscribedUserPost';
+import Reset from './components/screens/Reset';
+import NewPassword from './components/screens/NewPassword';
 
 
 export const UserContext = createContext();
@@ -25,18 +27,22 @@ const Routing = () => {
       dispatch({type: 'USER', payload: user});
       // navigate('/');
     }else{
-      navigate('/signin');
+      if(!window.location.pathname === '/reset-password') {
+        navigate('/signin');
+      }
     }
   }, []);
   return (
     <Routes >
       <Route exact path="/" element={<Home /> } />
+      <Route exact path="/profile" element={<Profile />} />
       <Route path="/signin" element={<Signin /> } />
       <Route path="/signup" element={<Signup /> } />
-      <Route exact path="/profile" element={<Profile />} />
       <Route path="/create" element={<CreatePost /> } /> 
       <Route path="/profile/:userId" element={<UserProfile /> } /> 
       <Route path="/my-followings-post" element={<SubscribedUserPost /> } /> 
+      <Route exact path="/reset-password" element={<Reset /> } /> 
+      <Route exact path="/reset/:token" element={<NewPassword /> } /> 
     </Routes >
   );
 }
