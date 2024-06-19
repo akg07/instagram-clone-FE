@@ -25,18 +25,17 @@ const Routing = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     if(user) {
       dispatch({type: 'USER', payload: user});
-      // navigate('/');
     }else{
-      if(!window.location.pathname === '/reset-password') {
+      if(!(window.location.pathname === '/reset-password')) {
         navigate('/signin');
       }
     }
-  }, []);
+  }, [navigate]);
   return (
     <Routes >
+      <Route path="/signin" element={<Signin /> } />
       <Route exact path="/" element={<Home /> } />
       <Route exact path="/profile" element={<Profile />} />
-      <Route path="/signin" element={<Signin /> } />
       <Route path="/signup" element={<Signup /> } />
       <Route path="/create" element={<CreatePost /> } /> 
       <Route path="/profile/:userId" element={<UserProfile /> } /> 

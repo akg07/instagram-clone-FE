@@ -2,11 +2,13 @@ import React, {useContext, useRef, useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
 import M from 'materialize-css';
+import config from '../config';
 
 const Navbar = () => {
 
   const searchModal = useRef(null);
   const [search, setSearch] = useState("");
+  const [userDetails, setUserDetails] = useState([]);
   const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext);
 
@@ -38,6 +40,32 @@ const Navbar = () => {
     }
   }
 
+  const fetchUsers = (query) => {
+    setSearch(query);
+
+    fetch(`${config?.backendUrl}/search-users`, {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({query})
+    })
+    .then(res => res.json())
+    .then(result => {
+      setUserDetails(result.user);
+    })
+  }
+
+  const navigateToProfile = (_id) => {
+    return state._id === _id ? `/profile` : `/profile/${_id}`;
+  }
+
+  const onUserClick = () => {
+    M.Modal.getInstance(searchModal.current).close();
+    setSearch(''); 
+    setUserDetails([]);
+  }
+
   return (
     <nav>
     <div className="nav-wrapper white">
@@ -50,17 +78,21 @@ const Navbar = () => {
     {/* Modal Structure */}
     <div id="modal1" className="modal searchModal" ref={searchModal}>
       <div className="modal-content">
-        <input type="text" placeholder='Search user' value={search} onChange={(e) => {setSearch(e.target.value)}} />
+        <input type="text" placeholder='Search user' value={search} onChange={(e) => {fetchUsers(e.target.value)}} />
 
         <ul className="collection">
-          <li className="collection-item">Alvin</li>
-          <li className="collection-item">Alvin</li>
-          <li className="collection-item">Alvin</li>
-          <li className="collection-item">Alvin</li>
+          {userDetails.map((userDetail => {
+            return <Link to={ navigateToProfile(userDetail._id) }
+                        onClick={ () => { onUserClick() } }
+                        key={userDetail._id} 
+                >
+                  <li className="collection-item">{userDetail.name}</li>
+                </Link>
+          }))}
         </ul>
       </div>
       <div className="modal-footer">
-        <button className="modal-close waves-effect waves-green btn-flat">Agree</button>
+        <button className="modal-close waves-effect waves-green btn-flat" onClick={() => {setSearch(''); setUserDetails([]);}}>close</button>
       </div>
     </div>
   </nav>

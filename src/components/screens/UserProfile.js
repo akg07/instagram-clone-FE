@@ -23,7 +23,7 @@ const UserProfile = () => {
     .then(result => {
       setUserProfile(result);
     })
-  }, []);
+  }, [userId]);
 
   const followUser = () => {
     fetch(`${config?.backendUrl}/follow`, {

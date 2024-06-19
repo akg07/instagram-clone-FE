@@ -10,17 +10,19 @@ const Home = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(`${config?.backendUrl}/all-post`, {
-      headers: {
-        'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': "application/json"
-      },
-      method: 'get'
-    })
-    .then(res => res.json())
-    .then(result => {
-      setData(result.posts);
-    })
+    if(localStorage.getItem('jwt')) {
+      fetch(`${config?.backendUrl}/all-post`, {
+        headers: {
+          'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
+          'Content-type': "application/json"
+        },
+        method: 'get'
+      })
+      .then(res => res.json())
+      .then(result => {
+        setData(result.posts);
+      })
+    }
   }, []);
 
   const likePost = (postId) => {
@@ -118,7 +120,7 @@ const Home = () => {
   return (
     <div className="home">
       {
-        data.map(post => {
+        data?.map(post => {
           return (
             <div className="card home-card" key={post._id}>
               <h5>
