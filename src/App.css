@@ -84,3 +84,15 @@ a{
 .material-icons:hover{
   cursor: pointer;
 }
+
+.searchIcon{
+  color: black;
+}
+
+.searchModal{
+  color: black
+}
+
+.collection-item {
+  width: 100%;
+}
