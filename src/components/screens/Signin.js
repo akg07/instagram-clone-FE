@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import M from 'materialize-css';
 import { UserContext } from '../../App';
-import config from '../../config';
+import { post } from '../../utils/router/Router';
+import { CONSTANT } from '../../utils/constant/Constant';
 
 const Signin = () => {
 
@@ -13,15 +14,7 @@ const Signin = () => {
 
   const login = () => {
 
-    fetch(`${config?.backendUrl}/signin`, {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        email, password
-      })
-    }).then((res => res.json()))
+    post(CONSTANT.SIGNIN, {email, password})
     .then(data => {
       if(data.error) {
         M.toast({html: data.error, classes: '#c62828 red darken-3'});
@@ -31,7 +24,6 @@ const Signin = () => {
         dispatch({type: 'USER', payload: data.user})
         M.toast({html: `${data.user.name} ${data.message}`, classes: '#43a047 green darken-1'});
         navigate('/');
-
       }
     })
   }

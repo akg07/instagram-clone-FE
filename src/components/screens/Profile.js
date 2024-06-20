@@ -1,23 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../App';
-import config from '../../config';
+import { get, postThirdParty, put } from '../../utils/router/Router'; 
+import { CONSTANT } from '../../utils/constant/Constant';
 
 const Profile = () => {
 
-  console.log(config?.backendUrl);
   const [myPics, setMyPics] = useState([]);
   const [image, setImage] = useState("");
   const { state, dispatch} = useContext(UserContext);
 
   useEffect(() => {
-    fetch(`${config?.backendUrl}/my-posts`, {
-      method: 'get',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      }
-    })
-    .then((res) => res.json())
+    get(CONSTANT.MY_POSTS)
     .then(result => {
       setMyPics(result.posts);
     })
@@ -35,13 +28,8 @@ const Profile = () => {
     data.append('upload_preset', 'instagram-clone');
     data.append('cloud_name', 'dfcstdai1');
 
-    fetch('https://api.cloudinary.com/v1_1/dfcstdai1/image/upload', {
-      method: 'post',
-      body: data
-    })
-    .then(res => res.json()) 
+    postThirdParty(CONSTANT.CLOUDNAIRY, data)
     .then(data =>{
-      console.log(data)
       if(data.url) {
         dispatch({type:'UPDATE_PIC', payload: data.url});
         uploadToDB(data.url);
@@ -57,17 +45,8 @@ const Profile = () => {
       photo: photo
     }
 
-    fetch(`${config?.backendUrl}/update-profile-pic`, {
-      method: 'put',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-      },
-      body: JSON.stringify(payload)
-    })
-    .then(res => res.json())
+    put(CONSTANT.UPDATE_PROFILE_PIC, payload)
     .then(result => {
-      console.log(result);
       const updatedPhoto = result?.result?.photo;
       localStorage.setItem('user', JSON.stringify({...state, photo: updatedPhoto}));
       dispatch({type:'UPDATE_PIC', payload: updatedPhoto});

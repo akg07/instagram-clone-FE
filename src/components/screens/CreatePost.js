@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import M from 'materialize-css';
 import { useNavigate } from 'react-router-dom';
-import config from '../../config';
+import { post, postThirdParty } from '../../utils/router/Router';
+import {CONSTANT} from '../../utils/constant/Constant';
 
 const CreatePost =() => {
 
@@ -13,18 +14,8 @@ const CreatePost =() => {
 
   useEffect(() => {
     if(url) { // check is implemented cause useEffect works when componet mounts.
-      fetch(`${config?.backendUrl}/create-post`, {
-        headers: {
-          'Content-type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-        },
-        method: 'post',
-        body: JSON.stringify({
-          title, body, pic: url
-        })
-      }).then(res => res.json())
+      post(CONSTANT.CREATE_POST, {title, body, pic: url})
       .then(data => {
-        console.log(data);
         if(data.error) {
           M.toast({html: data.error, classes: '#c62828 red darken-3'});
         }else {
@@ -42,11 +33,7 @@ const CreatePost =() => {
     data.append('upload_preset', 'instagram-clone');
     data.append('cloud_name', 'dfcstdai1');
 
-    fetch('https://api.cloudinary.com/v1_1/dfcstdai1/image/upload', {
-      method: 'post',
-      body: data
-    })
-    .then(res => res.json()) 
+    postThirdParty(CONSTANT.CLOUDNAIRY, data)
     .then(data =>{
       if(data.url) setURL(data.url);
     })
