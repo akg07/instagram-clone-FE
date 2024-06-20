@@ -46,7 +46,6 @@ const Navbar = () => {
 
     post(CONSTANT.SEARCH_USER, {query})
     .then(result => {
-      console.log(result);
       setUserDetails(result.user);
     }).catch(err => console.log('search user: ', err));
   }

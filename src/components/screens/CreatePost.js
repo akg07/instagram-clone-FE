@@ -16,7 +16,6 @@ const CreatePost =() => {
     if(url) { // check is implemented cause useEffect works when componet mounts.
       post(CONSTANT.CREATE_POST, {title, body, pic: url})
       .then(data => {
-        console.log(data);
         if(data.error) {
           M.toast({html: data.error, classes: '#c62828 red darken-3'});
         }else {

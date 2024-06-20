@@ -48,7 +48,6 @@ const Home = () => {
   const comment = (postId, text) => {
     put(CONSTANT.COMMENT, {postId, text})
     .then(result => {
-      console.log(result);
       const newData = data.map(item => {
         if(item._id === result.data._id) {
           return result.data;

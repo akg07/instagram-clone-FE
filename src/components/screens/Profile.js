@@ -30,7 +30,6 @@ const Profile = () => {
 
     postThirdParty(CONSTANT.CLOUDNAIRY, data)
     .then(data =>{
-      console.log(data)
       if(data.url) {
         dispatch({type:'UPDATE_PIC', payload: data.url});
         uploadToDB(data.url);
@@ -48,7 +47,6 @@ const Profile = () => {
 
     put(CONSTANT.UPDATE_PROFILE_PIC, payload)
     .then(result => {
-      console.log(result);
       const updatedPhoto = result?.result?.photo;
       localStorage.setItem('user', JSON.stringify({...state, photo: updatedPhoto}));
       dispatch({type:'UPDATE_PIC', payload: updatedPhoto});
