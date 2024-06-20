@@ -2,7 +2,8 @@ import React, {useContext, useRef, useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../App';
 import M from 'materialize-css';
-import config from '../config';
+import { post } from '../utils/router/Router';
+import {CONSTANT} from '../utils/constant/Constant';
 
 const Navbar = () => {
 
@@ -43,17 +44,11 @@ const Navbar = () => {
   const fetchUsers = (query) => {
     setSearch(query);
 
-    fetch(`${config?.backendUrl}/search-users`, {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({query})
-    })
-    .then(res => res.json())
+    post(CONSTANT.SEARCH_USER, {query})
     .then(result => {
+      console.log(result);
       setUserDetails(result.user);
-    })
+    }).catch(err => console.log('search user: ', err));
   }
 
   const navigateToProfile = (_id) => {
