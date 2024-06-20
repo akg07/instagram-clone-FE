@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { UserContext } from '../../App';
-import config from '../../config';
+import { get, put } from '../../utils/router/Router';
+import { CONSTANT } from '../../utils/constant/Constant';
 
 
 const UserProfile = () => {
@@ -12,31 +13,15 @@ const UserProfile = () => {
   const [showFollow, setShowFollow] = useState( state ? !state.followings.includes(userId) : true);
   
   useEffect(() => {
-    fetch(`${config?.backendUrl}/user/${userId}`, {
-      method: 'get',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      }
-    })
-    .then((res) => res.json())
+    get(`${CONSTANT.USER_WITH_ID}/${userId}`)
     .then(result => {
       setUserProfile(result);
     })
+    .catch((err) => console.log('user profile err: ', err))
   }, [userId]);
 
   const followUser = () => {
-    fetch(`${config?.backendUrl}/follow`, {
-      method: 'put',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        followId: userId
-      })
-    })
-    .then(res => res.json())
+    put(CONSTANT.FOLLOW, {followId: userId})
     .then(result => {
       const {followings, followers} = result.user;
       dispatch({type: 'UPDATE', payload: {followings, followers}});
@@ -59,17 +44,7 @@ const UserProfile = () => {
   }
 
   const unfollowUser = () => {
-    fetch(`${config?.backendUrl}/unfollow`, {
-      method: 'put',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        unfollowId: userId
-      })
-    })
-    .then(res => res.json())
+    put(CONSTANT.UNFOLLOW, {unfollowId: userId})
     .then(result => {
       const {followings, followers} = result.user;
       dispatch({type: 'UPDATE', payload: {followings, followers}});

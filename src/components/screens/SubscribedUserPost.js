@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
 import M from 'materialize-css';
 import { Link } from 'react-router-dom';
-import config from '../../config';
+import { deleteWithparams, get, put } from '../../utils/router/Router';
+import { CONSTANT } from '../../utils/constant/Constant';
 
 const SubscribedUserPost = () => {
 
@@ -10,31 +11,15 @@ const SubscribedUserPost = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(`${config?.backendUrl}/all-followings-post`, {
-      headers: {
-        'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-type': "application/json"
-      },
-      method: 'get'
-    })
-    .then(res => res.json())
+
+    get(CONSTANT.ALL_FOLLOWINGS_POST)
     .then(result => {
       setData(result.posts);
     })
   }, []);
 
   const likePost = (postId) => {
-    fetch(`${config?.backendUrl}/like`, {
-      method: 'put',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-      },
-      body: JSON.stringify({
-        postId
-      })
-    })
-    .then(res => res.json())
+    put(CONSTANT.LIKE, {postId})
     .then(result => {
       const newData = data.map(item => {
         if(item._id === result.data._id) {
@@ -47,17 +32,7 @@ const SubscribedUserPost = () => {
   }
 
   const unlikePost = (postId) => {
-    fetch(`${config?.backendUrl}/unlike`, {
-      method: 'put',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-      },
-      body: JSON.stringify({
-        postId
-      })
-    })
-    .then(res => res.json())
+    put(CONSTANT.UNLIKE, {postId})
     .then(result => {
       const newData = data.map(item => {
         if(item._id === result.data._id) {
@@ -70,18 +45,7 @@ const SubscribedUserPost = () => {
   }
 
   const comment = (postId, text) => {
-    fetch(`${config?.backendUrl}/comment`, {
-      method: 'put',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-      },
-      body: JSON.stringify({
-        postId,
-        text
-      })
-    })
-    .then(res => res.json())
+    put(CONSTANT.COMMENT, {postId, text})
     .then(result => {
       console.log(result);
       const newData = data.map(item => {
@@ -96,15 +60,8 @@ const SubscribedUserPost = () => {
 
   const deletePost = (postId) => {
 
-    fetch(`${config?.backendUrl}/delete-post/${postId}`, {
-      method: 'delete',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`
-      }
-    })
-    .then(res => res.json())
+    deleteWithparams(CONSTANT.DELETE_POST, postId)
     .then(result => {
-      console.log(result);
       const newData = data.filter(post => post._id !== result.data._id);
       setData(newData);
       M.toast({html: 'Post delete successfully', classes: '#43a047 green darken-1'})

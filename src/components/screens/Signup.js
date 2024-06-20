@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import M from 'materialize-css';
 import {Link, useNavigate } from 'react-router-dom';
-import config from '../../config';
+import { post, postThirdParty } from '../../utils/router/Router';
+import { CONSTANT } from '../../utils/constant/Constant';
 
 const Signup = () => {
 
@@ -24,11 +25,7 @@ const Signup = () => {
     data.append('upload_preset', 'instagram-clone');
     data.append('cloud_name', 'dfcstdai1');
 
-    fetch('https://api.cloudinary.com/v1_1/dfcstdai1/image/upload', {
-      method: 'post',
-      body: data
-    })
-    .then(res => res.json()) 
+    postThirdParty(CONSTANT.CLOUDNAIRY, data)
     .then(data =>{
       if(data.url) setURL(data.url);
     })
@@ -37,23 +34,13 @@ const Signup = () => {
 
   const signUp = () => {
 
-    const body = {
-      name,
-      email,
-      password
-    }
+    const body = { name, email, password }
 
     if(url) {
       body['photo'] = url
     }
 
-    fetch(`${config?.backendUrl}/signup`, {
-      method: 'post', 
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    }).then(res => res.json())
+    post(CONSTANT.SIGNUP, {body})
     .then(data => {
       if(data.error) {
         M.toast({html: data.error, classes: '#c62828 red darken-3'});
