@@ -117,3 +117,14 @@ a{
   width: 100%;
   margin-bottom: 10px;
 }
+
+/* singup */
+.singup {
+  width: 25%;
+  min-width: 400px;
+  margin: 40px auto;
+  padding: 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 12px #88888F;
+}
