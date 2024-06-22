@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { post, postThirdParty } from '../../utils/router/Router';
 import {CONSTANT} from '../../utils/constant/Constant';
 import { toast } from 'react-toastify';
+import { UserContext } from '../../App';
 
 
 const CreatePost =() => {
 
+  const {state, dispatch} = useContext(UserContext);
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -42,26 +44,55 @@ const CreatePost =() => {
   }
 
   return (
-    <div className='card input-field create-post'>
-      <input type="text" placeholder='title' value={title} onChange={(e) => setTitle(e.target.value)} />
-      <input type="text" placeholder='body' value={body} onChange={(e) => setBody(e.target.value)} />
+    <>
+      { 
+      state && 
+      <div className="singup">
+        <form>
 
-      <div className="file-field input-field">
-        <div className="btn blue darken-2">
-          <span>Upload</span>
-          <input type="file" onChange={(e) => setImage(e.target.files[0]) } />
-        </div>
-        <div className="file-path-wrapper">
-          <input className="file-path validate" type="text" />
-        </div>
-      </div>
+          <div className="form-outline mb-4">
+            <label className="form-label" >Title</label>
+            <input type="text" placeholder='Title' className="form-control" value={title} onChange={(e) => setTitle(e.target.value)}  />
+          </div>
 
-      <button className="btn waves-effect waves-light signin-button blue darken-2" onClick={ () => postDetails() }>
-        Submit Post
-      </button>
+          <div className="form-outline mb-4">
+            <label className="form-label" >Description</label>
+            <input type="text" placeholder="Description" className="form-control" value={body} onChange={(e) => setBody(e.target.value)} />
+          </div>
 
-    </div>
+          <div className="input-group mb-3">
+            <input type="file" className="form-control" onChange={(e) => setImage(e.target.files[0]) } />
+          </div>
+
+          <button type="button" className="btn btn-primary signinButton" onClick={ () => postDetails() } >Sign Up</button>
+
+        </form>
+      </div> 
+      }
+    </>
   );
+
+  // return (
+  //   <div className='card input-field create-post'>
+  //     <input type="text" placeholder='title' value={title} onChange={(e) => setTitle(e.target.value)} />
+  //     <input type="text" placeholder='body' value={title} onChange={(e) => setTitle(e.target.value)}  />
+
+  //     <div className="file-field input-field">
+  //       <div className="btn blue darken-2">
+  //         <span>Upload</span>
+  //         <input type="file" onChange={(e) => setImage(e.target.files[0]) } />
+  //       </div>
+  //       <div className="file-path-wrapper">
+  //         <input className="file-path validate" type="text" />
+  //       </div>
+  //     </div>
+
+  //     <button className="btn waves-effect waves-light signin-button blue darken-2" onClick={ () => postDetails() }>
+  //       Submit Post
+  //     </button>
+
+  //   </div>
+  // );
 }
 
 export default CreatePost;
