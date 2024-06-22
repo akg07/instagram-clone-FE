@@ -99,7 +99,7 @@ const Signup = () => {
           </div>
 
           <div className="input-group mb-3">
-            <input type="file" class="form-control" onChange={(e) => setImage(e.target.files[0])} />
+            <input type="file" className="form-control" onChange={(e) => setImage(e.target.files[0])} />
           </div>
 
           <button  type="button" className="btn btn-primary signinButton" onClick={() => postData()} >Sign Up</button>
@@ -128,39 +128,6 @@ const Signup = () => {
       }
     </>
   );
-
-  // return (
-  //   <>
-  //     {
-  //       !state && 
-  //       <div className="mycard">
-  //         <div className="card auth-card input-field">
-  //           <h2>Sepiagram</h2>
-  //           <input type="text" placeholder='name' value={name} onChange={(e) => setName(e.target.value)} />
-  //           <input type="email" placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-  //           <input type="password" placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-
-  //           <div className="file-field input-field">
-  //             <div className="btn blue darken-2">
-  //               <span>Profile Image</span>
-  //               <input type="file" onChange={(e) => setImage(e.target.files[0]) } />
-  //             </div>
-  //             <div className="file-path-wrapper">
-  //               <input className="file-path validate" type="text" />
-  //             </div>
-  //           </div>
-
-  //           <button className="btn waves-effect waves-light signin-button blue darken-2" 
-  //               onClick={() => postData()}>
-  //             Signup
-  //           </button>
-  //           <h5> <Link to="/signin"> Already have an account? Signin</Link> </h5>
-  //         </div>
-  //       </div>
-  //     }
-  //   </>
-    
-  // );
 }
 
 export default Signup;
