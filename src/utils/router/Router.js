@@ -1,71 +1,55 @@
+import axios from 'axios';
 
-export const get = (url) => {
+export const get = async (url) => {
   console.log(`get || url: ${url}`);
-
-  const response = fetch(`${url}`, {
+  const {data} = await axios.get(`${url}`, {
     headers: {
       'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
       'Content-type': "application/json"
     },
-    method: 'get'
-  })
-  .then(res => res.json());
-
-  return response;
+  });
+  return data;
 }
 
-export const put = (url, body) => {
+export const put = async (url, body) => {
   console.log(`put || url: ${url} || payload: ${body}`);
-
-  const response = fetch(`${url}`, {
-    method: 'put',
+  const payload = JSON.stringify(body);
+  const {data} = await axios.put(`${url}`,payload, {
     headers: {
       'Content-type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     },
-    body: JSON.stringify(body)
-  })
-  .then(res => res.json());
+  });
 
-  return response;
+  return data;
 }
 
-export const deleteWithparams = (url, id) => {
-
+export const deleteWithparams = async (url, id) => {
   console.log(`delete with params || Url: ${url} || id: ${id}`);
 
-  const response = fetch(`${url}/${id}`, {
-    method: 'delete',
+  const {data} = await axios.delete(`${url}/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('jwt')}`
     }
-  })
-  .then(res => res.json())
+  });
 
-  return response;
+  return data;
 }
 
-export const post = (url, body) => {
+export const post = async (url, body) => {
   console.log(`post || url: ${url} || payload: ${body}`);
-  const response = fetch(`${url}`, {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`
-    },
-    body: JSON.stringify(body)
-  }).then((res => res.json()));
+  
+  const payload = JSON.stringify(body);
+  const { data } = await axios.post(`${url}`, payload, {headers: {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('jwt')}`
+  }})
 
-  return response;
+  return data;
 }
 
-export const postThirdParty = (url, body) => {
+export const postThirdParty = async (url, body) => {
   console.log(`postThirdParty || url: ${url} || payload: ${body}`);
-
-  const response = fetch(`${url}`, {
-    method: 'post',
-    body: body
-  }).then((res => res.json()));
-
-  return response;
+  const {data} = await axios.post(`${url}`, body)
+  return data;
 }
