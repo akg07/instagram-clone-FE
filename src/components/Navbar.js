@@ -4,6 +4,7 @@ import { UserContext } from '../App';
 import M from 'materialize-css';
 import { post } from '../utils/router/Router';
 import {CONSTANT} from '../utils/constant/Constant';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
 
@@ -68,7 +69,7 @@ const Navbar = () => {
               <button className="btn btn-danger" type="submit" onClick={() => {
                 localStorage.clear();
                 dispatch({type: "CLEAR"});
-                M.toast({html: `Logged out successfully`, classes: '#43a047 green darken-1'});
+                toast.success('Logged out successfully');
                 navigate('/signin');
               }}>Logout</button>
             </form>

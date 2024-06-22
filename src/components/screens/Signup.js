@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import M from 'materialize-css';
 import {Link, useNavigate } from 'react-router-dom';
 import { post, postThirdParty } from '../../utils/router/Router';
 import { CONSTANT } from '../../utils/constant/Constant';
 import { UserContext } from '../../App';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
 
@@ -57,9 +57,9 @@ const Signup = () => {
     post(CONSTANT.SIGNUP, body)
     .then(data => {
       if(data.error) {
-        M.toast({html: data.error, classes: '#c62828 red darken-3'});
+        toast.error(data.error);
       }else {
-        M.toast({html: data.message, classes: '#43a047 green darken-1'});
+        toast(data.message);
         navigate('/signin');
       }
     })

@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import M from 'materialize-css';
 import { UserContext } from '../../App';
 import { post } from '../../utils/router/Router';
 import { CONSTANT } from '../../utils/constant/Constant';
+import { toast } from 'react-toastify';
 
 const Signin = () => {
 
@@ -28,16 +28,17 @@ const Signin = () => {
     post(CONSTANT.SIGNIN, {email, password})
     .then(data => {
       if(data.error) {
-        M.toast({html: data.error, classes: '#c62828 red darken-3'});
+        toast.error(data.error);
       }else{
         localStorage.setItem('jwt', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         dispatch({type: 'USER', payload: data.user})
-        // M.toast({html: `${data.user.name} ${data.message}`, classes: '#43a047 green darken-1'});
+        toast.success(`${data.user.name} ${data.message}`);
         navigate('/');
       }
     }).catch(err => {
       console.log('signin error', err);
+      toast('something went wrong');
     })
   }
 

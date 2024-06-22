@@ -1,5 +1,6 @@
 
 export const get = (url) => {
+  console.log(`get || url: ${url}`);
 
   const response = fetch(`${url}`, {
     headers: {
@@ -14,6 +15,8 @@ export const get = (url) => {
 }
 
 export const put = (url, body) => {
+  console.log(`put || url: ${url} || payload: ${body}`);
+
   const response = fetch(`${url}`, {
     method: 'put',
     headers: {
@@ -29,6 +32,8 @@ export const put = (url, body) => {
 
 export const deleteWithparams = (url, id) => {
 
+  console.log(`delete with params || Url: ${url} || id: ${id}`);
+
   const response = fetch(`${url}/${id}`, {
     method: 'delete',
     headers: {
@@ -41,12 +46,12 @@ export const deleteWithparams = (url, id) => {
 }
 
 export const post = (url, body) => {
-  console.log(url, body)
+  console.log(`post || url: ${url} || payload: ${body}`);
   const response = fetch(`${url}`, {
-    method: 'post',
-    headers: {
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
     },
     body: JSON.stringify(body)
   }).then((res => res.json()));
@@ -55,6 +60,8 @@ export const post = (url, body) => {
 }
 
 export const postThirdParty = (url, body) => {
+  console.log(`postThirdParty || url: ${url} || payload: ${body}`);
+
   const response = fetch(`${url}`, {
     method: 'post',
     body: body

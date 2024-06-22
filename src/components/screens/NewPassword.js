@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import M from 'materialize-css';
 import { post } from '../../utils/router/Router';
 import { CONSTANT } from '../../utils/constant/Constant';
 import { FaCheckCircle } from "react-icons/fa";
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const NewPassword = () => {
 
@@ -21,9 +21,9 @@ const NewPassword = () => {
     post(CONSTANT.NEW_PASSWORD, {newpass:password,token})
     .then(data => {
       if(data.error) {
-        M.toast({html: data.error, classes: '#c62828 red darken-3'});
+        toast.error(data.error);
       }else{
-        M.toast({html: `${data.message}`, classes: '#43a047 green darken-1'});
+        toast.success(data.message);
         navigate('/signin');
 
       }

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../App';
-import M from 'materialize-css';
 import { Link } from 'react-router-dom';
 import { deleteWithparams, get, put } from '../../utils/router/Router';
 import { CONSTANT } from '../../utils/constant/Constant';
+import { toast } from 'react-toastify';
 
 const SubscribedUserPost = () => {
 
@@ -64,7 +64,7 @@ const SubscribedUserPost = () => {
     .then(result => {
       const newData = data.filter(post => post._id !== result.data._id);
       setData(newData);
-      M.toast({html: 'Post delete successfully', classes: '#43a047 green darken-1'})
+      toast.success('Post deleted successfully');
     })
   }
 
