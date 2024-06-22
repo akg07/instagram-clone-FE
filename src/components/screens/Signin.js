@@ -39,20 +39,57 @@ const Signin = () => {
     })
   }
 
-  return (
+  return(
     <>
-      { !state && <div className="mycard">
-        <div className="card auth-card input-field">
-          <h2>Sepiagram</h2>
-          <input type="email" placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+      { !state && <div className="login">
+        <h1 className="logo">Sepiagram</h1>
+        <form>
+          <div className="form-outline mb-4">
+            <label className="form-label" >Email address</label>
+            <input type="email" placeholder="xyz@abc.com" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
 
-          <button className="btn waves-effect waves-light signin-button blue darken-2" onClick={() => login()}> Login </button>
+          <div className="form-outline mb-4">
+            <label className="form-label" >Password</label>
+            <input type="password" placeholder='q2345344546' className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
 
-          <h6> <Link to='/signup'> Don't have an account? signup</Link></h6>
-          <p> <Link to='/reset-password'> forgot password?</Link></p>
-      </div>
-    </div>}
+          <div className="row mb-4">
+            {/* <div className="col d-flex justify-content-center">
+              <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                <label className="form-check-label" for="form2Example31"> Remember me </label>
+              </div>
+            </div> */}
+
+            <div className="col">
+              <Link to="/reset-password">Forgot password?</Link>
+            </div>
+          </div>
+
+          <button  type="button" className="btn btn-primary signinButton" onClick={() => login()} >Sign in</button>
+
+          <div className="text-center">
+            <p>Not a member? <Link to="/signup">SignUp</Link></p>
+            {/* <p>or sign up with:</p>
+            <button  type="button" className="btn btn-link btn-floating mx-1">
+              <i className="fab fa-facebook-f"></i>
+            </button> 
+            
+            <button  type="button" className="btn btn-link btn-floating mx-1">
+              <i className="fab fa-google"></i>
+            </button>
+
+            <button  type="button" className="btn btn-link btn-floating mx-1">
+              <i className="fab fa-twitter"></i>
+            </button>
+
+            <button  type="button" className="btn btn-link btn-floating mx-1">
+              <i className="fab fa-github"></i>
+            </button> */}
+          </div>
+        </form>
+      </div> }
     </>
   );
 }
