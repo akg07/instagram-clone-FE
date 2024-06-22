@@ -41,6 +41,7 @@ export const deleteWithparams = (url, id) => {
 }
 
 export const post = (url, body) => {
+  console.log(url, body)
   const response = fetch(`${url}`, {
     method: 'post',
     headers: {

@@ -24,15 +24,19 @@ const Reset = () => {
   }
 
   return (
-    <div className="mycard">
-      <div className="card auth-card input-field">
-      <h2>Sepiagram</h2>
-      <input type="email" placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-      <button className="btn waves-effect waves-light signin-button blue darken-2" onClick={() => resetPassword()}>
-        Reset Password
-      </button>
-    </div>
-    </div>
+    <>
+      <div className="reset">
+        <h1 className="logo">Sepiagram</h1>
+        <form>
+          <div className="form-outline mb-4">
+            <label className="form-label" >Email address</label>
+            <input type="email" placeholder="xyz@abc.com" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+
+          <button  type="button" className="btn btn-primary signinButton" onClick={() => resetPassword()} >Reset Password</button>
+        </form>
+      </div>
+    </>
   );
 }
 

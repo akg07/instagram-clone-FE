@@ -15,7 +15,6 @@ import SubscribedUserPost from './components/screens/SubscribedUserPost';
 import Reset from './components/screens/Reset';
 import NewPassword from './components/screens/NewPassword';
 
-
 export const UserContext = createContext();
 
 const Routing = () => {
@@ -26,7 +25,7 @@ const Routing = () => {
     if(user) {
       dispatch({type: 'USER', payload: user});
     }else{
-      if(!(window.location.pathname === '/reset-password')) {
+      if(!(window.location.pathname.startsWith('/reset'))) {
         navigate('/signin');
       }
     }
@@ -41,7 +40,7 @@ const Routing = () => {
       <Route path="/profile/:userId" element={<UserProfile /> } /> 
       <Route path="/my-followings-post" element={<SubscribedUserPost /> } /> 
       <Route exact path="/reset-password" element={<Reset /> } /> 
-      <Route exact path="/reset/:token" element={<NewPassword /> } /> 
+      <Route path="/reset/:token" element={<NewPassword /> } /> 
     </Routes >
   );
 }
@@ -50,12 +49,14 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <UserContext.Provider value={{state, dispatch}}>
-      <Router>
-        <Navbar />
-        <Routing />
-      </Router>
-    </UserContext.Provider>
+    <>
+      <UserContext.Provider value={{state, dispatch}}>
+        <Router>
+          <Navbar />
+          <Routing />
+        </Router>
+      </UserContext.Provider>
+    </>
 
   );
 }

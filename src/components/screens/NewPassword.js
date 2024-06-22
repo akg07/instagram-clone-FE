@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
 import M from 'materialize-css';
 import { post } from '../../utils/router/Router';
 import { CONSTANT } from '../../utils/constant/Constant';
+import { FaCheckCircle } from "react-icons/fa";
+import { useNavigate, useParams } from 'react-router-dom';
 
 const NewPassword = () => {
 
   const { token } = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const isPasswordMatch = () => {
+    return confirmPassword.length > 0 && password===confirmPassword;
+  }
 
   const updatePassword = () => {
 
@@ -25,18 +31,24 @@ const NewPassword = () => {
   }
 
   return (
-    <div className="mycard">
-      <div className="card auth-card input-field">
-      <h2>Sepiagram</h2>
-      <input type="password" placeholder='Enter new password' value={password} onChange={(e) => setPassword(e.target.value)} />
-
-      <button className="btn waves-effect waves-light signin-button blue darken-2" onClick={() => updatePassword()}>
-        Update password
-      </button>
-
-      <h5> <Link to='/signup'> Don't have an account? signup</Link></h5>
-    </div>
-    </div>
+    <>
+      <div className="reset">
+        <h1 className="logo">Sepiagram</h1>
+        <form>
+          <div className="form-outline mb-4">
+            <label className="form-label" >Password</label>
+            <input type="text" placeholder="Enter password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          </div>
+          
+          <div className="form-outline mb-4">
+            <label className="form-label" >Confirm Password { isPasswordMatch() && <FaCheckCircle className='match-pass-feedback'/> } </label>
+            <input type="password" placeholder="Confirm password" className="form-control" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+          </div>
+          
+          <button type="button" className="btn btn-primary reset-password-btn" onClick={() => updatePassword()} >Update password</button>
+        </form>
+      </div>
+    </>
   );
 }
 

@@ -33,9 +33,11 @@ const Signin = () => {
         localStorage.setItem('jwt', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         dispatch({type: 'USER', payload: data.user})
-        M.toast({html: `${data.user.name} ${data.message}`, classes: '#43a047 green darken-1'});
+        // M.toast({html: `${data.user.name} ${data.message}`, classes: '#43a047 green darken-1'});
         navigate('/');
       }
+    }).catch(err => {
+      console.log('signin error', err);
     })
   }
 
@@ -89,7 +91,8 @@ const Signin = () => {
             </button> */}
           </div>
         </form>
-      </div> }
+      </div>
+      }
     </>
   );
 }

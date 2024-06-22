@@ -98,7 +98,7 @@ a{
 }
 
 /* Signin Page */
-.login {
+.login, .singup, .reset, .reset-password {
   width: 25%;
   min-width: 400px;
   margin: 40px auto;
@@ -118,13 +118,13 @@ a{
   margin-bottom: 10px;
 }
 
-/* singup */
-.singup {
-  width: 25%;
-  min-width: 400px;
-  margin: 40px auto;
-  padding: 15px;
-  border: 1px solid black;
-  border-radius: 10px;
-  box-shadow: 5px 5px 12px #88888F;
+/* reset-password */
+
+.match-pass-feedback {
+  color: green;
+}
+
+.reset-password-btn {
+  width: 100%;
+  
 }
