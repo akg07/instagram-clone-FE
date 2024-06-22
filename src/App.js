@@ -16,6 +16,7 @@ import Reset from './components/screens/Reset';
 import NewPassword from './components/screens/NewPassword';
 import Loading from './components/Loading';
 import axios from 'axios';
+import PostCard from './components/screens/PostCard';
 
 export const UserContext = createContext();
 
@@ -43,15 +44,27 @@ const Routing = () => {
       <Route path="/my-followings-post" element={<SubscribedUserPost /> } /> 
       <Route exact path="/reset-password" element={<Reset /> } /> 
       <Route path="/reset/:token" element={<NewPassword /> } /> 
+      <Route path="/post-card" element={<PostCard /> } /> 
     </Routes >
   );
 }
+
+const restrictConsolelLog = () => {
+  const originalConsoleLog = console.log;
+  const originalConsoleWarn = console.warn;
+  const originalConsoleError = console.error;
+
+  console.log = (...args) => {};
+  console.warn = (...args) => {};
+  console.error = (...args) => {};
+};
 
 function App() {
   const [ loading, setLoading ]  = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    restrictConsolelLog();
     axios.interceptors.request.use((config) => {
       setLoading(true);
       return config;

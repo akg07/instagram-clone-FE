@@ -144,6 +144,150 @@ a{
   z-index: 9999;
 }
 
-.loader {
+/* Post box */
+.post-container{
+  display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    min-height: fit-content;
+    margin: 0;
+    background-color: #fafafa;
+    /* font-family: 'Arial', sans-serif; */
+}
 
+.container {
+  width: 400px;
+}
+
+.post-box {
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.post-box-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-info {
+  flex-grow: 1;
+}
+
+.username {
+  font-weight: bold;
+  display: block;
+  text-decoration: none;
+}
+
+.location {
+  color: #8e8e8e;
+  font-size: 0.9em;
+}
+
+.options {
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.post-box-footer {
+  padding: 10px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.actions span {
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.likes {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.caption {
+  font-size: 0.9em;
+}
+
+.caption .username {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.comments {
+  margin: 10px 0;
+}
+
+.comment {
+  margin-bottom: 5px;
+}
+
+.comment .username {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.add-comment {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #dbdbdb;
+  padding-top: 10px;
+}
+
+.comment-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+
+.comment-input::placeholder {
+  color: #8e8e8e;
+}
+
+.comment-btn {
+  background: none;
+  border: none;
+  color: #3897f0;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.comment-btn:disabled {
+  color: #b3dffc;
+  cursor: default;
+}
+
+.liked-icon {
+  font-size: 25px;
+  color: red;
+}
+
+.unliked-icon {
+  font-size: 25px;
 }
