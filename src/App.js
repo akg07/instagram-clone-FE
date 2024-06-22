@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, createContext, useReducer, useContext } from 'react';
+import React, { useEffect, createContext, useReducer, useContext, useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './components/screens/Home';
 import Profile from './components/screens/Profile';
@@ -14,7 +14,9 @@ import { reducer, initialState } from './reducers/userReducer';
 import SubscribedUserPost from './components/screens/SubscribedUserPost';
 import Reset from './components/screens/Reset';
 import NewPassword from './components/screens/NewPassword';
-
+import Loading from './components/Loading';
+import axios from 'axios';
+import PostCard from './components/screens/PostCard';
 
 export const UserContext = createContext();
 
@@ -26,7 +28,7 @@ const Routing = () => {
     if(user) {
       dispatch({type: 'USER', payload: user});
     }else{
-      if(!(window.location.pathname === '/reset-password')) {
+      if(!(window.location.pathname.startsWith('/reset'))) {
         navigate('/signin');
       }
     }
@@ -41,21 +43,52 @@ const Routing = () => {
       <Route path="/profile/:userId" element={<UserProfile /> } /> 
       <Route path="/my-followings-post" element={<SubscribedUserPost /> } /> 
       <Route exact path="/reset-password" element={<Reset /> } /> 
-      <Route exact path="/reset/:token" element={<NewPassword /> } /> 
+      <Route path="/reset/:token" element={<NewPassword /> } /> 
+      <Route path="/post-card" element={<PostCard /> } /> 
     </Routes >
   );
 }
 
-function App() {
+const restrictConsolelLog = () => {
+  const originalConsoleLog = console.log;
+  const originalConsoleWarn = console.warn;
+  const originalConsoleError = console.error;
 
+  console.log = (...args) => {};
+  console.warn = (...args) => {};
+  console.error = (...args) => {};
+};
+
+function App() {
+  const [ loading, setLoading ]  = useState(false);
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    restrictConsolelLog();
+    axios.interceptors.request.use((config) => {
+      setLoading(true);
+      return config;
+    }, (error) => {
+      return Promise.reject(error);
+    });
+
+    axios.interceptors.response.use((response) => {
+      setLoading(false);
+      return response;
+    }, (error) => {
+      return Promise.reject(error);
+    });
+  }, []);
   return (
-    <UserContext.Provider value={{state, dispatch}}>
-      <Router>
-        <Navbar />
-        <Routing />
-      </Router>
-    </UserContext.Provider>
+    <>
+      <UserContext.Provider value={{state, dispatch}}>
+        <Router>
+          <Navbar />
+          <Loading show={loading}/>
+          <Routing />
+        </Router>
+      </UserContext.Provider>
+    </>
 
   );
 }
