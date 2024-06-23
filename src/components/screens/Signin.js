@@ -66,14 +66,14 @@ const Signin = () => {
             </div> */}
 
             <div className="col">
-              <Link to="/reset-password">Forgot password?</Link>
+              <Link className='no-underline' to="/reset-password">Forgot password?</Link>
             </div>
           </div>
 
           <button  type="button" className="btn btn-primary signinButton" onClick={() => login()} >Sign in</button>
 
           <div className="text-center">
-            <p>Not a member? <Link to="/signup">SignUp</Link></p>
+            <p>Not a member? <Link className='no-underline' to="/signup">SignUp</Link></p>
             {/* <p>or sign up with:</p>
             <button  type="button" className="btn btn-link btn-floating mx-1">
               <i className="fab fa-facebook-f"></i>

@@ -291,3 +291,7 @@ a{
 .unliked-icon {
   font-size: 25px;
 }
+
+.no-underline {
+  text-decoration: none;
+}

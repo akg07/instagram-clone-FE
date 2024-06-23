@@ -105,7 +105,7 @@ const Signup = () => {
           <button  type="button" className="btn btn-primary signinButton" onClick={() => postData()} >Sign Up</button>
 
           <div className="text-center">
-            <p>Already have an account? <Link to="/signin">Signin</Link></p>
+            <p>Already have an account? <Link className='no-underline' to="/signin">Signin</Link></p>
             {/* <p>or sign up with:</p>
             <button  type="button" className="btn btn-link btn-floating mx-1">
               <i className="fab fa-facebook-f"></i>
