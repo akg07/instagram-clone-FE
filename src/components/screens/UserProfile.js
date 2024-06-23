@@ -70,22 +70,17 @@ const UserProfile = () => {
   return (
     <>
     {userProfile ? 
-      <div className='profile'>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-around',
-        margin: '18px 0px', 
-        borderBottom: '1px solid grey'
-      }} >
+      <div className='profile-container'>
+      <div className='profile-data profile' >
         <div>
-          <img style={{width: "160px", height:"160px", borderRadius: "80px" }} 
+          <img className='profile-img'
           src={userProfile?.user?.photo}
           alt=''
           />
         </div>
-        <div>
+        <div className='user-details-container'>
           <h4>{userProfile?.user?.name ? userProfile.user.name : 'loading...'}</h4>
-          <div style={{ display: 'flex', justifyContent: 'space-between', width: '110%'}}>
+          <div className='profile-details'>
             <h6>{userProfile?.posts?.length ? userProfile?.posts?.length : 0} posts</h6>
             <h6>{userProfile?.user?.followers?.length ? userProfile?.user.followers?.length : 0} followers</h6>
             <h6>{userProfile?.user?.followings?.length ? userProfile?.user.followings?.length : 0} following</h6>

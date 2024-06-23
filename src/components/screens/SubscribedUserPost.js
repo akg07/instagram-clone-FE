@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { deleteWithparams, get, put } from '../../utils/router/Router';
 import { CONSTANT } from '../../utils/constant/Constant';
 import { toast } from 'react-toastify';
+import { FaHeart, FaRegHeart  } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 const SubscribedUserPost = () => {
 
@@ -72,59 +74,73 @@ const SubscribedUserPost = () => {
     return post.postedBy._id === state._id ? '/profile' : `/profile/${post.postedBy._id}`
   }
 
-  return (
-    <div className="home">
-      {
-        data.map(post => {
-          return (
-            <div className="card home-card" key={post._id}>
-              <h5>
-                <Link to={ getUser(post) } className='name'>{ post.postedBy.name }</Link>
-                {
-                  post.postedBy._id === state._id ? <i className="material-icons" onClick={ () => deletePost(post._id) } style={{float:'right'}}>delete</i> : ''
-                }
-              </h5>
-              <div className="card-image">
-                <img src={post.photo} alt={post.title} />
-              </div>
-              <div className="card-content">
-                <h6>{post.title}</h6>
-                <p>{post.body}</p>
-                <h6>{post.likes.length} likes</h6>
-                {/* <i className="material-icons">favorite</i> */}
+  return data.map(post => {
+    return (
+        <div className="post-container" key={post._id}>
+          <div className="container">
+            <div className="post-box">
+                <div className="post-box-header">
+                    <img src={post.postedBy.photo} alt="Profile Picture" className="profile-pic" />
+                    <div className="profile-info">
+                        <Link className="username" to={ getUser(post) }>{post.postedBy.name}</Link>
+                        {/* <span className="location">Location 1</span> */}
+                    </div>
 
-                {
-                  post.comments.map(comment => {
-                    return (
-                      <h6 key={comment._id}>
-                        <span style={{fontWeight: '500'}}> { comment.postedBy.name }</span> 
-                        { comment.text }
-                      </h6>
-                    );
-                  })
-                }
+                    {
+                      post.postedBy._id === state?._id ? 
+                      <div className="options">
+                        <MdDelete onClick={ () => deletePost(post._id) }></MdDelete>
+                      </div>
+                      : ''
 
-                {
-                  post.likes.includes(state._id) ? 
-                  <i className="material-icons" onClick={ () => unlikePost(post._id) }>thumb_down</i> :
-                  <i className="material-icons" onClick={ () => likePost(post._id) }>thumb_up</i>
-                }
+                    }
+                </div>
+                <img src={post.photo} alt="Post Image" className="post-image" />
+                <div className="post-box-footer">
+                    <div className="actions">
+                        <span className="like">
+                          {
+                            post.likes.includes(state._id) ? 
+                            <FaHeart className='liked-icon' onClick={ () => unlikePost(post._id) }> </FaHeart > : 
+                            <FaRegHeart className='unliked-icon' onClick={ () => likePost(post._id) } > </FaRegHeart > 
+                          }
+                        </span>
+                        {/* <span className="comment">💬</span>
+                        <span className="share">🔗</span> */}
+                    </div>
+                    <span className="likes">{post.likes.length} likes</span>
+                    
+                    <div className="caption">
+                        <span className="username">{post.postedBy.name}</span> {post.body}
+                    </div>
 
-                <form onSubmit={(e) => {
-                  e.preventDefault();
-                  comment(post._id, e.target[0].value);
-                  e.target[0].value = "";
-                }}>
-                  <input type='text' placeholder='add comment' />
-                </form>
-              </div>
+                    <div className="comments">
+                      {
+                      post.comments.map(comment => {
+                        return(
+                          <div className="comment" key={comment._id}>
+                            <span className="username">{comment.postedBy.name}</span> {comment.text}
+                          </div>
+                        )
+                      })
+                      }
+                    </div>
+
+                    <div className="add-comment">
+                        <form onSubmit={(e) => {
+                          e.preventDefault();
+                          comment(post._id, e.target[0].value);
+                          e.target[0].value = "";
+                        }}>
+                          <input type="text" placeholder="Add a comment..." className="comment-input" />
+                        </form>
+                    </div>
+                </div>
             </div>
-          )
-        })
-      }
-      
-    </div>
-  );
+          </div>
+        </div>
+    );
+  });
 }
 
 export default SubscribedUserPost;
