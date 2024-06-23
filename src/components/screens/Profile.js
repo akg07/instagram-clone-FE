@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '../../App';
 import { get, postThirdParty, put } from '../../utils/router/Router'; 
 import { CONSTANT } from '../../utils/constant/Constant';
@@ -8,6 +8,7 @@ const Profile = () => {
   const [myPics, setMyPics] = useState([]);
   const [image, setImage] = useState("");
   const { state, dispatch} = useContext(UserContext);
+  const imageRef = useRef(null);
 
   useEffect(() => {
     get(CONSTANT.MY_POSTS)
@@ -56,45 +57,35 @@ const Profile = () => {
     })
   }
 
+  const handleImageClick = () => {
+    imageRef.current.click()
+  }
+
+  const handleImageChanges = (e) => {
+    setImage(e.target.files[0]);
+  }
+
   return (
-    <div className='profile'>
-      <div style={{
-        margin: '18px 0px', 
-        borderBottom: '1px solid grey'
-      }}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-        }} >
-          <div>
-            <img style={{width: "160px", height:"160px", borderRadius: "80px" }} 
-            src={state ? state.photo : '' } alt='state.name'
-            />
+    <div className='profile-container'>
+      <div className='profile'>
+        <div className='profile-data' >
+          <div className='profile-img-container' onClick={handleImageClick}>
+            <img className='profile-img' src={state ? state.photo : '' } alt='state.name' />
+            <div className="overlay">Upload</div>
+            <input className='profile-update' type="file" ref={imageRef} onChange={(e) => {handleImageChanges(e)}}/>
           </div>
         
-          <div>
+          <div className='profile-details-container'>
             <h4>{state ? state.name : 'loading...'}</h4>
-            <div style={{ display: 'flex', justifyContent: 'space-between', width: '110%'}}>
+            <div className='profile-details' >
               <h6>{ myPics?.length} posts</h6>
               <h6>{ state?.followers?.length ? state.followers?.length : 0 } followers</h6>
               <h6>{ state?.followings?.length ? state.followings?.length : 0 } following</h6>
             </div>
           </div>
         </div>
-        {/* <button className="btn waves-effect waves-light signin-button blue darken-2" onClick={() => {updateProfilePic()}} style={{ 
-          margin: "10px 0px 10px 171px"
-        }}>
-          Update Pic
-        </button> */}
-        <div className="file-field input-field">
-          <div className="btn blue darken-2">
-            <span>Upload</span>
-            <input type="file" onChange={(e) => setImage(e.target.files[0]) } />
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" type="text" />
-          </div>
-        </div>
+        
+        
       </div>
 
       <div className='gallery'>

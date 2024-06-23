@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { post } from '../../utils/router/Router';
 import { CONSTANT } from '../../utils/constant/Constant';
 import { toast } from 'react-toastify';
@@ -33,7 +33,10 @@ const Reset = () => {
             <input type="email" placeholder="xyz@abc.com" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
 
-          <button  type="button" className="btn btn-primary signinButton" onClick={() => resetPassword()} >Reset Password</button>
+          <button  type="button" className="btn btn-primary signinButton" onClick={() => resetPassword()} >Send Email</button>
+          <div className="text-center">
+            <p>Go back to  <Link to="/signin" className='no-underline'>SignIn</Link></p>
+          </div>
         </form>
       </div>
     </>
