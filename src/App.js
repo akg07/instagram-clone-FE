@@ -16,6 +16,7 @@ import Reset from './components/screens/Reset';
 import NewPassword from './components/screens/NewPassword';
 import Loading from './components/Loading';
 import axios from 'axios';
+import SearchUser from './components/screens/SearchUser';
 
 export const UserContext = createContext();
 
@@ -41,6 +42,7 @@ const Routing = () => {
       <Route path="/create" element={<CreatePost /> } /> 
       <Route path="/profile/:userId" element={<UserProfile /> } /> 
       <Route path="/my-followings-post" element={<SubscribedUserPost /> } /> 
+      <Route path="/search-user" element={<SearchUser /> } /> 
       <Route exact path="/reset-password" element={<Reset /> } /> 
       <Route path="/reset/:token" element={<NewPassword /> } /> 
     </Routes >

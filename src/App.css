@@ -387,3 +387,58 @@ a{
   width: 30%;
   margin: 5px;
 }
+
+/* search Icon */
+.search{
+  display: flex;
+  justify-content: center;
+}
+.search-container{
+  margin: 20px auto;
+  width: 40%;
+}
+
+.search-box {
+  display: flex;
+  justify-content: center;
+}
+
+.search-inp {
+  margin-right: 10px;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.user-list{
+  width: 100%;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 150px;
+  background-color: white;
+  list-style: none;
+  margin: 0;
+  padding: 5px;
+  margin-top: 15px;
+}
+
+.noUL{
+  text-decoration: none;
+}
+
+
+.user-content{ 
+  cursor: pointer;
+  margin: 10px 0px;
+  border: 1px solid black;
+  padding: 10px;
+  background-color: white;
+}
+
+.user-content:hover {
+  background-color: #aecae1;
+}
+
+.user-name {
+  font-size: 20px;
+}
